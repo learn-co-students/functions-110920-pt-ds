@@ -176,7 +176,57 @@ class VariableAssignment:
             
             print('✅ All tests were passed!')
         
-        
-        
 
+class PokemonWithType:
+    
+    def solution(self, pokemon_type, data):
+
+        pokemon_names = set()
+        for key in data.keys():
+            if data[key]['stats']['type1'] == pokemon_type:
+                pokemon_names.add(key)
+            elif data[key]['stats']['type2'] == pokemon_type:
+                pokemon_names.add(key)
+
+        pokemon_names = list(pokemon_names)
+        return pokemon_names
+    
+    def run(self, answer, data):
+        
+        assert answer('grass') == self.solution('grass', data)
+        assert answer('ghost') == self.solution('ghost', data)
+        assert answer('rock') == self.solution('rock', data)
+        assert answer('steel') == self.solution('steel', data)
+        print('✅ All tests were passed!')
+        
+        
+class StatByType:
+    
+    def solution(self, stat, pokemon_type, data):
+        
+        pokemon_names = self.pokemon_with_type(pokemon_type)
+        stats = [data[name]['stats'][stat] for name in pokemon_names]
+        return stats
+    
+    def pokemon_with_type(self, pokemon_type):
+        data = self.data
+        pokemon_names = set()
+        for key in data.keys():
+            if data[key]['stats']['type1'] == pokemon_type:
+                pokemon_names.add(key)
+            elif data[key]['stats']['type2'] == pokemon_type:
+                pokemon_names.add(key)
+
+        pokemon_names = list(pokemon_names)
+        return pokemon_names
+
+    
+    def run(self, answer, data):
+        self.data = data
+        assert answer('attack', 'grass') == self.solution('attack', 'grass', data)
+        assert answer('defense', 'ghost') == self.solution('defense','ghost', data)
+        assert answer('hp','rock') == self.solution('hp','rock', data)
+        assert answer('speed','steel') == self.solution('speed','steel', data)
+        print('✅ All tests were passed!')
+        
             
